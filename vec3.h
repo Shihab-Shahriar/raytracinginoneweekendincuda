@@ -4,6 +4,12 @@
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
+#include <phillox.h>
+#include <tyche.h>
+#include <squares.h>
+
+using RNG = Squares;
+ 
 
 class vec3  {
 
