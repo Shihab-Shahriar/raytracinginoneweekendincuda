@@ -24,7 +24,6 @@ void check_cuda(cudaError_t result, char const *const func, const char *const fi
 }
 
 
-
 // Matching the C++ code would recurse enough into color() calls that
 // it was blowing up the stack, so we have to turn this into a
 // limited-depth loop instead.  Later code in the book limits to a max
