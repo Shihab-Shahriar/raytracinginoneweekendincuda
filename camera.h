@@ -8,7 +8,6 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-template <typename RNG>
 __device__ vec3 random_in_unit_disk(RNG &local_rand_state) {
     vec3 p;
     do {
@@ -33,7 +32,6 @@ public:
         vertical = 2.0f*half_height*focus_dist*v;
     }
 
-    template <typename RNG>
     __device__ ray get_ray(float s, float t, RNG &local_rand_state) {
         vec3 rd = lens_radius*random_in_unit_disk(local_rand_state);
         vec3 offset = u * rd.x() + v * rd.y();
