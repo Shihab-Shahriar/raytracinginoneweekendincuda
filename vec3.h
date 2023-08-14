@@ -8,7 +8,7 @@
 #include <tyche.h>
 #include <squares.h>
 
-using RNG = Squares;
+using RNG = Phillox;
  
 
 class vec3  {

@@ -28,7 +28,6 @@ void check_cuda(cudaError_t result, char const *const func, const char *const fi
 // it was blowing up the stack, so we have to turn this into a
 // limited-depth loop instead.  Later code in the book limits to a max
 // depth of 50, so we adapt this a few chapters early on the GPU.
-template <typename RNG>
 __device__ vec3 color(const ray& r, hitable **world, RNG &local_rand_state) {
     ray cur_ray = r;
     vec3 cur_attenuation = vec3(1.0,1.0,1.0);
@@ -95,6 +94,7 @@ __global__ void render(vec3 *fb, int max_x, int max_y, int ns, camera **cam, hit
     col[2] = sqrt(col[2]);
     fb[pixel_index] = col;
 }
+
 
 #define RND (local_rand_state.rand())
 
