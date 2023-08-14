@@ -169,7 +169,6 @@ int main() {
     vec3 *fb;
     checkCudaErrors(cudaMallocManaged((void **)&fb, fb_size));
 
-
     // allocate random state
     // curandState *d_rand_state;
     // checkCudaErrors(cudaMalloc((void **)&d_rand_state, num_pixels*sizeof(curandState)));
@@ -218,7 +217,7 @@ int main() {
             int ir = int(255.99*fb[pixel_index].r());
             int ig = int(255.99*fb[pixel_index].g());
             int ib = int(255.99*fb[pixel_index].b());
-            std::cout << ir << " " << ig << " " << ib << "\n";
+            //std::cout << ir << " " << ig << " " << ib << "\n";
         }
     }
 
