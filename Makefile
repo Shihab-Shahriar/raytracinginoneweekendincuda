@@ -7,7 +7,7 @@ NVCC           = nvcc -ccbin $(HOST_COMPILER)
 NVCC_DBG       =
 
 NVCCFLAGS      = $(NVCC_DBG) -m64
-GENCODE_FLAGS  = -gencode arch=compute_75,code=sm_75
+GENCODE_FLAGS  = -gencode arch=compute_70,code=sm_70 -gencode arch=compute_75,code=sm_75
 
 SRCS = main.cu
 INCS = vec3.h ray.h hitable.h hitable_list.h sphere.h camera.h material.h
