@@ -14,9 +14,9 @@ include(FetchContent)
 
 FetchContent_Declare(
   crng
-  SOURCE_DIR /home/shihab/src/rnd
-  # GIT_REPOSITORY https://github.com/Shihab-Shahriar/rnd.git
-  # GIT_TAG        main
+  #SOURCE_DIR /home/shihab/src/rnd
+  GIT_REPOSITORY https://github.com/Shihab-Shahriar/rnd.git
+  GIT_TAG        main
 )
 
 FetchContent_MakeAvailable(crng)
