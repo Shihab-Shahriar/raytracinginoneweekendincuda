@@ -5,6 +5,13 @@
 #include <stdlib.h>
 #include <iostream>
 
+#include <Kokkos_Core.hpp>
+#include <Kokkos_Random.hpp>
+
+
+using ExecutionSpace = Kokkos::Cuda;
+using CudaMemorySpace = ExecutionSpace::memory_space;
+
 class vec3  {
 
 
