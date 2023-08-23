@@ -1,7 +1,6 @@
 #ifndef CAMERAH
 #define CAMERAH
 
-#include <curand_kernel.h>
 #include "ray.h"
 #include <Kokkos_Core.hpp>
 #include <Kokkos_Random.hpp>
