@@ -208,7 +208,7 @@ int main() {
             int ir = int(255.99*fb[pixel_index].r());
             int ig = int(255.99*fb[pixel_index].g());
             int ib = int(255.99*fb[pixel_index].b());
-            std::cout << ir << " " << ig << " " << ib << "\n";
+            //std::cout << ir << " " << ig << " " << ib << "\n";
         }
     }
 
