@@ -13,15 +13,16 @@ set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -m64")
 include(FetchContent)
 
 FetchContent_Declare(
-  crng
+  r123
   #SOURCE_DIR /home/shihab/src/rnd
-  GIT_REPOSITORY https://github.com/Shihab-Shahriar/rnd.git
+  GIT_REPOSITORY https://github.com/DEShawResearch/random123.git
   GIT_TAG        main
 )
 
-FetchContent_MakeAvailable(crng)
+FetchContent_MakeAvailable(r123)
 
 # Later in the file, when defining their targets:
-add_executable(rt main.cu)
-target_link_libraries(rt PRIVATE crng)
+add_executable(rt123 paook.cu)
+target_link_libraries(rt123 PRIVATE crng)
+target_include_directories(rt123 PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/_deps/r123-src/include)
 

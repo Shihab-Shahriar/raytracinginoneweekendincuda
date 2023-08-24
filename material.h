@@ -25,7 +25,7 @@ __device__ bool refract(const vec3& v, const vec3& n, float ni_over_nt, vec3& re
         return false;
 }
 
-#define RANDVEC3 vec3(local_rand_state.rand(),local_rand_state.rand(),local_rand_state.rand())
+#define RANDVEC3 vec3(rand(local_rand_state),rand(local_rand_state),rand(local_rand_state))
 
 __device__ vec3 random_in_unit_sphere(RNG &local_rand_state) {
     vec3 p;
@@ -102,7 +102,7 @@ public:
             reflect_prob = schlick(cosine, ref_idx);
         else
             reflect_prob = 1.0f;
-        if (local_rand_state.rand() < reflect_prob)
+        if (rand(local_rand_state) < reflect_prob)
             scattered = ray(rec.p, reflected);
         else
             scattered = ray(rec.p, refracted);
