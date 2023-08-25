@@ -1,7 +1,6 @@
 #ifndef CAMERAH
 #define CAMERAH
 
-#include <curand_kernel.h>
 #include "ray.h"
 
 #ifndef M_PI
@@ -11,7 +10,7 @@
 __device__ vec3 random_in_unit_disk(RNG &local_rand_state) {
     vec3 p;
     do {
-        p = 2.0f*vec3(rand(local_rand_state),rand(local_rand_state),0) - vec3(1,1,0);
+        p = 2.0f*vec3(local_rand_state.rand(),local_rand_state.rand(),0) - vec3(1,1,0);
     } while (dot(p,p) >= 1.0f);
     return p;
 }

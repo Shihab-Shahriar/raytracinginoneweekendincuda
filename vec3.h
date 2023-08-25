@@ -4,15 +4,33 @@
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
-#include "RandomNumbers.h"
+#include <limits>
+#include <Random123/philox.h>
+#include <Random123/uniform.hpp>
 
-using RNG = hoomd::RandomGenerator; 
-using UDist = hoomd::UniformDistribution<float>;
+using namespace r123;
 
-float __host__ __device__ rand(RNG &local_rand_state){
-    UDist uniform(0.0, 1.0);
-    return uniform(local_rand_state);
-}
+class RNG{
+public:
+    __host__ __device__ RNG(uint64_t seed_, uint64_t counter_){
+        k = {{(uint32_t)(seed_ >> 32), (uint32_t)(seed_ & 0xFFFFFFFF)}};
+        c = {{0, 0, (uint32_t)(counter_ >> 32), (uint32_t)(counter_ & 0xFFFFFFFF)}};
+    }
+
+    __host__ __device__ float rand(){
+        c.incr();
+        Philox4x32::ctr_type rand = rng(c, k);
+        //float x = 2.*rand.v[0]/(double)std::numeric_limits<uint32_t>::max() - 1.;
+        //float x = static_cast<float>(rand.v[0]) / static_cast<float>(std::numeric_limits<uint32_t>::max());
+        float x = u01<float, uint32_t>(rand.v[0]);
+        return x;
+    }
+
+private:
+    Philox4x32 rng;
+    Philox4x32::key_type k; 
+    Philox4x32::ctr_type c; 
+};
 
 class vec3  {
 

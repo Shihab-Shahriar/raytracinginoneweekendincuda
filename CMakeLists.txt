@@ -22,7 +22,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(r123)
 
 # Later in the file, when defining their targets:
-add_executable(rt123 paook.cu)
-target_link_libraries(rt123 PRIVATE crng)
+add_executable(rt123 main.cu)
+#target_link_libraries(rt123 PRIVATE r123)
 target_include_directories(rt123 PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/_deps/r123-src/include)
 
