@@ -4,6 +4,15 @@
 #include <math.h>
 #include <stdlib.h>
 #include <iostream>
+#include "RandomNumbers.h"
+
+using RNG = hoomd::RandomGenerator; 
+using UDist = hoomd::UniformDistribution<float>;
+
+float __host__ __device__ rand(RNG &local_rand_state){
+    UDist uniform(0.0, 1.0);
+    return uniform(local_rand_state);
+}
 
 class vec3  {
 

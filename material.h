@@ -25,9 +25,13 @@ __device__ bool refract(const vec3& v, const vec3& n, float ni_over_nt, vec3& re
         return false;
 }
 
-#define RANDVEC3 vec3(curand_uniform(local_rand_state),curand_uniform(local_rand_state),curand_uniform(local_rand_state))
+#define RANDVEC3 vec3(rand(local_rand_state),rand(local_rand_state),rand(local_rand_state))
 
+<<<<<<< HEAD
 __device__ vec3 random_in_unit_sphere(curandStatePhilox4_32_10_t *local_rand_state) {
+=======
+__device__ vec3 random_in_unit_sphere(RNG &local_rand_state) {
+>>>>>>> 3e3dcabbf1516b4b8fbb1aea7f20c8e79ec58cd4
     vec3 p;
     do {
         p = 2.0f*RANDVEC3 - vec3(1,1,1);
@@ -41,13 +45,21 @@ __device__ vec3 reflect(const vec3& v, const vec3& n) {
 
 class material  {
     public:
+<<<<<<< HEAD
         __device__ virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered, curandStatePhilox4_32_10_t *local_rand_state) const = 0;
+=======
+        __device__ virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered, RNG &local_rand_state) const = 0;
+>>>>>>> 3e3dcabbf1516b4b8fbb1aea7f20c8e79ec58cd4
 };
 
 class lambertian : public material {
     public:
         __device__ lambertian(const vec3& a) : albedo(a) {}
+<<<<<<< HEAD
         __device__ virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered, curandStatePhilox4_32_10_t *local_rand_state) const  {
+=======
+        __device__ virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered, RNG &local_rand_state) const  {
+>>>>>>> 3e3dcabbf1516b4b8fbb1aea7f20c8e79ec58cd4
              vec3 target = rec.p + rec.normal + random_in_unit_sphere(local_rand_state);
              scattered = ray(rec.p, target-rec.p);
              attenuation = albedo;
@@ -60,7 +72,8 @@ class lambertian : public material {
 class metal : public material {
     public:
         __device__ metal(const vec3& a, float f) : albedo(a) { if (f < 1) fuzz = f; else fuzz = 1; }
-        __device__ virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered, curandStatePhilox4_32_10_t *local_rand_state) const  {
+
+        __device__ virtual bool scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered, RNG &local_rand_state) const  {
             vec3 reflected = reflect(unit_vector(r_in.direction()), rec.normal);
             scattered = ray(rec.p, reflected + fuzz*random_in_unit_sphere(local_rand_state));
             attenuation = albedo;
@@ -73,11 +86,12 @@ class metal : public material {
 class dielectric : public material {
 public:
     __device__ dielectric(float ri) : ref_idx(ri) {}
+
     __device__ virtual bool scatter(const ray& r_in,
                          const hit_record& rec,
                          vec3& attenuation,
                          ray& scattered,
-                         curandStatePhilox4_32_10_t *local_rand_state) const  {
+                         RNG &local_rand_state) const  {
         vec3 outward_normal;
         vec3 reflected = reflect(r_in.direction(), rec.normal);
         float ni_over_nt;
@@ -100,7 +114,7 @@ public:
             reflect_prob = schlick(cosine, ref_idx);
         else
             reflect_prob = 1.0f;
-        if (curand_uniform(local_rand_state) < reflect_prob)
+        if (rand(local_rand_state) < reflect_prob)
             scattered = ray(rec.p, reflected);
         else
             scattered = ray(rec.p, refracted);

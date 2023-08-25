@@ -2,4 +2,5 @@ cudart
 cudart.o
 out.jpg
 out.ppm
+*.ncu-rep
 build/
