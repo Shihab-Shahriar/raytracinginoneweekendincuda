@@ -7,14 +7,13 @@ project(RT CXX CUDA)
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CUDA_STANDARD 17)
-set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -m64")
-
+set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -arch=sm_70")
 
 include(FetchContent)
 
 FetchContent_Declare(
   crng
-  #SOURCE_DIR /home/shihab/src/rnd
+  #SOURCE_DIR /mnt/ufs18/home-158/khanmd/rnd
   GIT_REPOSITORY https://github.com/Shihab-Shahriar/rnd.git
   GIT_TAG        main
 )
