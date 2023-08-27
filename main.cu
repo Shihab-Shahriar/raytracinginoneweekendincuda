@@ -1,7 +1,6 @@
 #include <iostream>
 #include <time.h>
 #include <float.h>
-#include <curand_kernel.h>
 #include "vec3.h"
 #include "ray.h"
 #include "sphere.h"
@@ -72,7 +71,7 @@ __device__ vec3 color(const ray& r, hitable **world, RNG &local_rand_state) {
 //     curand_init(1984+pixel_index, 0, 0, &rand_state[pixel_index]);
 // }
 
-__global__ void render(vec3 *fb, int max_x, int max_y, int ns, camera **cam, hitable **world) {
+extern "C" __global__ void render(vec3 *fb, int max_x, int max_y, int ns, camera **cam, hitable **world) {
     int i = threadIdx.x + blockIdx.x * blockDim.x;
     int j = threadIdx.y + blockIdx.y * blockDim.y;
     if((i >= max_x) || (j >= max_y)) return;
@@ -98,7 +97,7 @@ __global__ void render(vec3 *fb, int max_x, int max_y, int ns, camera **cam, hit
 
 #define RND (local_rand_state.rand())
 
-__global__ void create_world(hitable **d_list, hitable **d_world, camera **d_camera, int nx, int ny) {
+extern "C" __global__ void create_world(hitable **d_list, hitable **d_world, camera **d_camera, int nx, int ny) {
     if (threadIdx.x == 0 && blockIdx.x == 0) {
         //curandState local_rand_state = *rand_state;
 
@@ -143,7 +142,7 @@ __global__ void create_world(hitable **d_list, hitable **d_world, camera **d_cam
     }
 }
 
-__global__ void free_world(hitable **d_list, hitable **d_world, camera **d_camera) {
+extern "C" __global__ void free_world(hitable **d_list, hitable **d_world, camera **d_camera) {
     for(int i=0; i < 22*22+1+3; i++) {
         delete ((sphere *)d_list[i])->mat_ptr;
         delete d_list[i];
@@ -217,7 +216,7 @@ int main() {
             int ir = int(255.99*fb[pixel_index].r());
             int ig = int(255.99*fb[pixel_index].g());
             int ib = int(255.99*fb[pixel_index].b());
-            //std::cout << ir << " " << ig << " " << ib << "\n";
+            std::cout << ir << " " << ig << " " << ib << "\n";
         }
     }
 

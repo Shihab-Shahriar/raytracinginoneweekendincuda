@@ -1,7 +1,6 @@
 #ifndef CAMERAH
 #define CAMERAH
 
-#include <curand_kernel.h>
 #include "ray.h"
 
 #ifndef M_PI

@@ -13,7 +13,7 @@ include(FetchContent)
 
 FetchContent_Declare(
   crng
-  #SOURCE_DIR /mnt/ufs18/home-158/khanmd/rnd
+  # SOURCE_DIR /mnt/ufs18/home-158/khanmd/rnd
   GIT_REPOSITORY https://github.com/Shihab-Shahriar/rnd.git
   GIT_TAG        main
 )
