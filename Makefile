@@ -1,3 +1,6 @@
+# Do this before running the executable:
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/ufs18/home-158/khanmd/hippy/clr/build/install/lib
+
 HOST_COMPILER  = g++
 NVCC           = nvcc -ccbin $(HOST_COMPILER)
 
