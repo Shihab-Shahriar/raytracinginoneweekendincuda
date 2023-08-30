@@ -1,4 +1,3 @@
-CUDA_PATH     ?= /usr/local/cuda
 HOST_COMPILER  = g++
 NVCC           = nvcc -ccbin $(HOST_COMPILER)
 
@@ -12,12 +11,16 @@ GENCODE_FLAGS  = -arch=sm_80
 
 SRCS = main.cu
 INCS = vec3.h ray.h hitable.h hitable_list.h sphere.h camera.h material.h
+INCLUDE_PATH = -I/mnt/ufs18/home-158/khanmd/hippy/clr/build/install/include
+LIBS = -L/mnt/ufs18/home-158/khanmd/hippy/clr/build/install/lib
+LDFLAGS = -lrocrand
 
-cudart: cudart.o
-	$(NVCC) $(NVCCFLAGS) $(GENCODE_FLAGS) -o cudart cudart.o
+cudart: cudart.o $(INCS)
+	$(NVCC) $(NVCCFLAGS) $(GENCODE_FLAGS) -o cudart cudart.o $(LIBS) $(LDFLAGS)
 
 cudart.o: $(SRCS) $(INCS)
-	$(NVCC) $(NVCCFLAGS) $(GENCODE_FLAGS) -o cudart.o -c main.cu
+	$(NVCC) $(NVCCFLAGS) $(GENCODE_FLAGS) $(INCLUDE_PATH) -o cudart.o -c main.cu 
+
 
 out.ppm: cudart
 	rm -f out.ppm
@@ -35,4 +38,4 @@ profile_metrics: cudart
 	nvprof --metrics achieved_occupancy,inst_executed,inst_fp_32,inst_fp_64,inst_integer ./cudart > out.ppm
 
 clean:
-	rm -f cudart cudart.o out.ppm out.jpg
+	rm -f cudart cudart.o out.ppm out.jpg out.txt
